@@ -1,0 +1,23 @@
+.container {
+  height: 100vh;
+}
+
+#components-form-login {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100vh;
+}
+
+#components-form-login .login-form {
+  max-width: 300px;
+}
+#components-form-login .login-form-forgot {
+  float: right;
+}
+#components-form-login .login-form-button {
+  width: 100%;
+}
+
+
