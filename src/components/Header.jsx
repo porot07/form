@@ -6,16 +6,15 @@ import {
   useRouteMatch,
   useParams,
 } from 'react-router-dom';
+
 import MyForm from './MyForm';
+import Main from './Main';
 
 const Header = () => {
   return (
     <Switch>
-      <Route path="/failure">
-        <Failure />
-      </Route>
-      <Route path="/about">
-        <About/>
+      <Route path="/main">
+        <Main />
       </Route>
       <Route path="/topics">
         <Topics/>
@@ -27,13 +26,6 @@ const Header = () => {
   );
 };
 
-const About = () => {
-  return <h2>Hello HacoonaMatata</h2>;
-};
-
-const Failure = () => {
-  return <h2>403 Forbidden - Access Denied</h2>;
-}
 
 const Topics = () => {
   const match = useRouteMatch();

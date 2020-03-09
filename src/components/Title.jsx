@@ -2,7 +2,9 @@ import React from 'react';
 
 const Title = () => {
   return (
-    <h1>Helllllooasdfosajdopfjaspdofjspdjf World!</h1>
+    <div>
+      <h1>Helllllooasdfosajdopfjaspdofjspdjf World!</h1>
+    </div>
   );
 };
 

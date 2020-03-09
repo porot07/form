@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAction } from 'redux-actions';
+import { message } from 'antd';
 
 import routes from '../routes';
 import history from '../history';
@@ -16,10 +17,11 @@ export const login = (username, password) => async (dispatch) => {
       password,
     });
     dispatch(loginSuccess({ token: response.data.token }));
-    history.push('/about');
+    message.success('Loaded!', 1);
+    history.push('/main/nav3');
   } catch (e) {
     dispatch(loginFailure());
-    history.push('/failure');
+    message.error('Failure!', 1);
   }
 };
 

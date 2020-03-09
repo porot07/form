@@ -1,23 +1,20 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Form, Input, Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Form, Input, Button, message,
+} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import history from '../history';
 import { login } from '../actions';
 
-// const dispatch = useDispatch();
-// dispatch()
-const { location } = history;
-console.log(location);
+
 const MyForm = () => {
   const dispatch = useDispatch();
+  const stateUI = useSelector((state) => state.loginData.state);
   const onFinish = ({ username, password }) => {
     dispatch(login(username, password));
-    console.log('Received values of form: ', username, password);
+    // console.log('Received values of form: ', username, password);
   };
-  const [form] = Form.useForm();
-  console.log(form);
   return (
     <Form
       name="normal_login"
@@ -38,8 +35,8 @@ const MyForm = () => {
         <Input prefix={<LockOutlined className="site-form-item-icon" />} type= "password" placeholder="Пароль" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          Войти
+        <Button type="primary" htmlType="submit" className="login-form-button" disabled={stateUI === 'request'}>
+          {stateUI === 'request' ? 'Подождите...' : 'Войти'}
         </Button>
       </Form.Item>
     </Form>

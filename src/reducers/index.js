@@ -23,7 +23,9 @@ const loginData = handleActions({
       state: 'failure',
     };
   },
-}, {});
+}, {
+  state: '',
+});
 
 export default combineReducers({
   loginData,
