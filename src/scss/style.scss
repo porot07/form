@@ -1,0 +1,50 @@
+.container {
+  height: 100vh;
+}
+
+#components-form-login {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100vh;
+  .login-form {
+    max-width: 300px;
+    &-forgot {
+      float: right;
+    }
+    &-button {
+      width: 100%;
+    }
+  }
+}
+
+#components-layout-custom-trigger {
+  .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+    &:hover {
+      color: #1890ff;
+    }
+  }
+  .logo {
+    min-height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    h1 {
+      color: #fff;
+    }
+  }
+}
+
+.site-layout {
+  .site-layout-background {
+    background: #fff;
+  }
+}

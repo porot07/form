@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row } from 'antd';
 import 'antd/dist/antd.css';
-import '../css/style.css';
 
 import Header from './Header';
 

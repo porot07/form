@@ -1,19 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Form, Input, Button, message,
-} from 'antd';
+import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import { login } from '../actions';
 
-
 const MyForm = () => {
   const dispatch = useDispatch();
-  const stateUI = useSelector((state) => state.loginData.state);
+  const stateUI = useSelector((state) => state.loadingUI.state);
   const onFinish = ({ username, password }) => {
     dispatch(login(username, password));
-    // console.log('Received values of form: ', username, password);
   };
   return (
     <Form

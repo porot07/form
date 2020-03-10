@@ -18,27 +18,27 @@ export const login = (username, password) => async (dispatch) => {
     });
     dispatch(loginSuccess({ token: response.data.token }));
     message.success('Loaded!', 1);
-    history.push('/main/nav3');
+    history.push('/main');
   } catch (e) {
     dispatch(loginFailure());
     message.error('Failure!', 1);
   }
 };
 
-// export const getDataRequest = createAction('GET_DATA_REQUEST');
-// export const getDataSuccess = createAction('GET_DATA_SUCCESS');
-// export const getDataFailure = createAction('GET_DATA_FAILURE');
+export const dataRequest = createAction('DATA_REQUEST');
+export const dataSuccess = createAction('DATA_SUCCESS');
+export const dataFailure = createAction('DATA_FAILURE');
 
-// export const getData = (token) = async (dispatch) => {
-//   dispatch(getDataRequest());
-//   try {
-//     const response = await axios({
-//       method: 'get',
-//       url: routes.groups(),
-//       headers: { Authorization: token },
-//     });
-//     dispatch(getDataSuccess({ data: response.data }));
-//   } catch (e) {
-//     dispatch(getDataFailure());
-//   }
-// };
+export const data = (token) => async (dispatch) => {
+  dispatch(dataRequest());
+  try {
+    const response = await axios({
+      method: 'get',
+      url: routes.groups(),
+      headers: { Authorization: token },
+    });
+    dispatch(dataSuccess(response.data.results));
+  } catch (e) {
+    dispatch(dataFailure(e));
+  }
+};

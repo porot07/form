@@ -8,9 +8,10 @@ import {
   DeleteOutlined, HomeOutlined,
 } from '@ant-design/icons';
 
-import history from '../history';
+import Groups from './Groups';
 
-const Main = () => {
+
+const Side = () => {
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const toogle = () => {
@@ -23,12 +24,12 @@ const Main = () => {
   };
   const match = useRouteMatch();
   return (
-    <Layout style={{ minHeight: '100vh' }} id="components-layout-demo-custom-trigger">
+    <Layout style={{ minHeight: '100vh' }} id="components-layout-custom-trigger">
       <Sider trigger={null} collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo">
           <h1>Admin Panel</h1>
         </div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">
             <HomeOutlined />
             <span>Home</span>
@@ -70,14 +71,14 @@ const Main = () => {
         }}
         >
           <Switch>
+            <Route exact path={`${match.path}`}>
+              <Groups />
+            </Route>
             <Route path={`${match.path}/nav2`}>
               <h1>I'm nav 2</h1>
             </Route>
             <Route path={`${match.path}/nav3`}>
               <h1>NAVVVV 3</h1>
-            </Route>
-            <Route exact path={`${match.path}`}>
-              <h1>Header</h1>
             </Route>
             <Route path={`${match.path}/nav4`}>
               <h1>четвёртый нав</h1>
@@ -92,4 +93,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Side;

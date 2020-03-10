@@ -8,19 +8,19 @@ import {
 } from 'react-router-dom';
 
 import MyForm from './MyForm';
-import Main from './Main';
+import Side from './Side';
 
 const Header = () => {
   return (
     <Switch>
       <Route path="/main">
-        <Main />
+        <Side />
       </Route>
       <Route path="/topics">
         <Topics/>
       </Route>
       <Route path="/">
-        <div id="components-form-login"><MyForm/></div>
+        <div id="components-form-login"><MyForm /></div>
       </Route>
     </Switch>
   );
