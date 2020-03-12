@@ -42,13 +42,13 @@ const loadingUI = handleActions({
   },
 }, {});
 
-const group = handleActions({
-  [actions.dataRequest](state) {
+const groups = handleActions({
+  [actions.groupDataRequest](state) {
     return {
       ...state,
     };
   },
-  [actions.dataSuccess](state, { payload }) {
+  [actions.groupDataSuccess](state, { payload }) {
     return {
       ...state,
       data: payload.map((object) => ({
@@ -62,8 +62,24 @@ const group = handleActions({
       })),
     };
   },
-  [actions.dataFailure](state, { payload }) {
-    console.log('this is my error, what is catching me:', payload);
+  [actions.studentsDataSuccess](state, { payload }) {
+    return {
+      ...state,
+      data: state.data.map((object) => (object.num === payload.id
+        ? {
+          ...object,
+          description: payload.results.map((result) => ({
+            key: result.student.id,
+            name: result.student.name,
+            secondName: result.student.family,
+            fatherName: result.student.second_name,
+            phone: result.student.phone,
+          })),
+        }
+        : { ...object })),
+    };
+  },
+  [actions.groupDataFailure](state) {
     return {
       ...state,
     };
@@ -72,8 +88,35 @@ const group = handleActions({
   data: [],
 });
 
+const students = handleActions({
+  [actions.studentsDataRequest](state) {
+    return {
+      ...state,
+    };
+  },
+  // [actions.studentsDataSuccess](state, { payload }) {
+  //   return {
+  //     ...state,
+  //     data: payload.map((result) => ({
+  //       key: result.student.id,
+  //       name: result.student.name,
+  //       secondName: result.student.family,
+  //       fatherName: result.student.second_name,
+  //       phone: result.student.phone,
+  //     })),
+  //   };
+  // },
+  [actions.studentsDataFailure](state, { payload }) {
+    return {
+      ...state,
+      error: payload,
+    };
+  },
+}, {});
+
 export default combineReducers({
   loginData,
   loadingUI,
-  group,
+  groups,
+  students,
 });

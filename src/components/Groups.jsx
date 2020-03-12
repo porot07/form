@@ -7,13 +7,13 @@ import * as actions from '../actions';
 const Groups = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.loginData.token);
-  const data = useSelector((state) => state.group.data);
-  console.log(data);
+  const groups = useSelector((state) => state.groups.data);
   useEffect(() => {
-    dispatch(actions.data(token));
+    dispatch(actions.getGroupData(token));
   }, []);
+
   const columns = [
-    { title: 'No', dataIndex: 'num', key: 'num' },
+    { title: 'No.', dataIndex: 'num', key: 'num' },
     { title: 'Курс', dataIndex: 'name', key: 'name' },
     { title: 'Дата старта', dataIndex: 'date', key: 'date' },
     { title: 'Расписание', dataIndex: 'schedule', key: 'schedule' },
@@ -21,14 +21,28 @@ const Groups = () => {
     { title: 'При оплате за курс', dataIndex: 'sumAllMonth', key: 'sumAllMonth' },
   ];
 
+  const expandedRowRender = (record) => {
+    const columnsInsideTable = [
+      { title: 'Фамилия', dataIndex: 'secondName', key: 'secondName' },
+      { title: 'Имя', dataIndex: 'name', key: 'name' },
+      { title: 'Отчество', dataIndex: 'fatherName', key: 'fatherName' },
+      { title: 'Телефон', dataIndex: 'phone', key: 'phone' },
+    ];
+    return <Table
+      columns={columnsInsideTable}
+      dataSource={record.description}
+      pagination={false} />;
+  };
+
+  const onExpand = (expanded, record) => {
+    dispatch(actions.getStudentsData(record.num, token));
+  };
   return (
     <Table
       columns={columns}
-      // expandable={{
-      //   expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.address}</p>,
-      //   rowExpandable: (record) => record.name !== 'Not Expandable',
-      // }}
-      dataSource={data}
+      expandable={{ expandedRowRender, onExpand }}
+      dataSource={groups}
+      pagination={false}
     />
   );
 };
