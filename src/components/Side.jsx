@@ -75,7 +75,7 @@ const Side = () => {
               <Groups />
             </Route>
             <Route path={`${match.path}/nav2`}>
-              <h1>I'm nav 2</h1>
+              <h1>I&lsquo;m nav 2</h1>
             </Route>
             <Route path={`${match.path}/nav3`}>
               <h1>NAVVVV 3</h1>

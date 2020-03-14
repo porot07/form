@@ -1,15 +1,22 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table } from 'antd';
+import {
+  Table,
+  Form,
+  InputNumber,
+  Button,
+} from 'antd';
 
 import * as actions from '../actions';
+import CounterPay from './CounterPay';
 
 const Groups = () => {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.loginData.token);
   const groups = useSelector((state) => state.groups.data);
+  const loadingStudentsUI = useSelector((state) => state.loadingStudentsUI.loadingDataState);
+  const loadingGroupsUI = useSelector((state) => state.loadingGroupsUI.loadingState);
   useEffect(() => {
-    dispatch(actions.getGroupData(token));
+    dispatch(actions.getGroupData());
   }, []);
 
   const columns = [
@@ -23,27 +30,82 @@ const Groups = () => {
 
   const expandedRowRender = (record) => {
     const columnsInsideTable = [
-      { title: 'Фамилия', dataIndex: 'secondName', key: 'secondName' },
-      { title: 'Имя', dataIndex: 'name', key: 'name' },
-      { title: 'Отчество', dataIndex: 'fatherName', key: 'fatherName' },
-      { title: 'Телефон', dataIndex: 'phone', key: 'phone' },
+      {
+        title: 'No.',
+        dataIndex: 'number',
+        key: 'number',
+        width: 5,
+        align: 'center',
+      },
+      {
+        title: 'ФИО',
+        dataIndex: 'fullName',
+        key: 'name',
+        width: 200,
+      },
+      {
+        title: 'Телефон',
+        dataIndex: 'phone',
+        key: 'phone',
+        width: 100,
+        align: 'center',
+      },
+      {
+        title: 'Состояние платежей',
+        dataIndex: 'statePay',
+        key: 'statePay',
+        render: (text, recordRender) => (<CounterPay
+          modules={recordRender.modules}
+          payed={recordRender.payedMonth}
+        />),
+        width: 250,
+        align: 'center',
+      },
+      {
+        title: 'Создание платежа',
+        dataIndex: 'createPay',
+        key: 'createPay',
+        render: (text, recordRender) => {
+          const [form] = Form.useForm();
+          const onFinish = ({ numbers }) => {
+            dispatch(actions.postCreatePay(recordRender.idRegistration, numbers));
+          };
+          return (
+          <Form form={form} name="form-create-pay" layout="inline" onFinish={onFinish}>
+            <Form.Item name="numbers">
+              <InputNumber size="small" />
+            </Form.Item>
+            <Form.Item>
+              <Button size="small" type="primary" htmlType="submit">Отправить</Button>
+            </Form.Item>
+          </Form>);
+        },
+        align: 'center',
+      },
     ];
-    return <Table
-      columns={columnsInsideTable}
-      dataSource={record.description}
-      pagination={false} />;
+    return (
+        <Table
+          columns={columnsInsideTable}
+          dataSource={record.description}
+          pagination={false}
+          bordered
+          loading={loadingStudentsUI === 'request'} />
+    );
   };
 
   const onExpand = (expanded, record) => {
-    dispatch(actions.getStudentsData(record.num, token));
+    if (expanded) {
+      dispatch(actions.getStudentRegistrationData(record.num));
+    }
   };
   return (
-    <Table
-      columns={columns}
-      expandable={{ expandedRowRender, onExpand }}
-      dataSource={groups}
-      pagination={false}
-    />
+      <Table
+        columns={columns}
+        expandable={{ expandedRowRender, onExpand }}
+        dataSource={groups}
+        pagination={false}
+        loading={loadingGroupsUI === 'request'}
+      />
   );
 };
 

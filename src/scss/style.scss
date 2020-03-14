@@ -43,6 +43,25 @@
   }
 }
 
+#counter-container {
+  display: flex !important;
+  justify-content: space-around !important;
+  align-content: center;
+  height: 30px;
+  width: 100%;
+  .block-payed-color {
+    width: 25%;
+    margin-left: 2px;
+    background-color: rgb(116, 116, 116);
+    &green {
+      width: 25%;
+    margin-left: 2px;
+
+      background-color: green;
+    }
+  }
+}
+
 .site-layout {
   .site-layout-background {
     background: #fff;
