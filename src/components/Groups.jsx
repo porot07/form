@@ -13,10 +13,10 @@ import CounterPay from './CounterPay';
 const Groups = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups.data);
-  const loadingStudentsUI = useSelector((state) => state.loadingStudentsUI.loadingDataState);
+  const loadingStudentsUI = useSelector((state) => state.loadingStudentsUI.loadingState);
   const loadingGroupsUI = useSelector((state) => state.loadingGroupsUI.loadingState);
   useEffect(() => {
-    dispatch(actions.getGroupData());
+    dispatch(actions.getGroupsData());
   }, []);
 
   const columns = [

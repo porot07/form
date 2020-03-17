@@ -1,17 +1,15 @@
 import React from 'react';
-import { Row } from 'antd';
 import 'antd/dist/antd.css';
+import { Switch, Route } from 'react-router-dom';
 
-import Header from './Header';
+import Auth from './Auth';
+import Side from './Side';
 
-const App = () => {
-  return (
-    <div className="container">
-      <Row type="flex" justify="center" align="bottom">
-        <Header />
-      </Row>
-    </div>
-  );
-};
+const App = () => (
+    <Switch>
+      <Route exact path="/" render={() => <Auth />} />
+      <Route path="/main" render={() => <Side />} />
+    </Switch>
+);
 
 export default App;

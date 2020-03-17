@@ -4,9 +4,7 @@
 
 #components-form-login {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
   height: 100vh;
   .login-form {
     max-width: 300px;
@@ -41,6 +39,11 @@
       color: #fff;
     }
   }
+  .site-layout {
+    &-background {
+      background: #fff;
+    }
+  }
 }
 
 #counter-container {
@@ -53,17 +56,11 @@
     width: 25%;
     margin-left: 2px;
     background-color: rgb(116, 116, 116);
-    &green {
+    &-green {
       width: 25%;
     margin-left: 2px;
 
       background-color: green;
     }
-  }
-}
-
-.site-layout {
-  .site-layout-background {
-    background: #fff;
   }
 }

@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
 
 import * as actions from '../actions';
-import { loadingUI, loadingStudentsUI, loadingGroupsUI } from './loadingStateUI';
+import { loadingTokenUI, loadingStudentsUI, loadingGroupsUI } from './loadingStateUI';
 
 const loginData = handleActions({
   [actions.loginRequest](state) {
@@ -15,7 +15,8 @@ const loginData = handleActions({
       ...state,
     };
   },
-  [actions.loginFailure](state) {
+  [actions.loginFailure](state, { payload }) {
+    console.log('login failure: ', payload);
     return {
       ...state,
     };
@@ -23,78 +24,48 @@ const loginData = handleActions({
 }, {});
 
 const groups = handleActions({
-  [actions.getGroupDataRequest](state) {
+  [actions.getGroupsDataSuccess](state, { payload }) {
     return {
       ...state,
-    };
-  },
-  [actions.getGroupDataSuccess](state, { payload }) {
-    return {
-      ...state,
-      data: payload.map((object) => ({
-        key: object.id,
-        num: object.id,
-        name: object.course.title,
-        date: object.start_date,
-        schedule: object.schedule,
-        sumPerModule: object.price_per_month,
-        sumAllMonth: object.price_per_all,
+      data: payload.map((group) => ({
+        key: group.id,
+        num: group.id,
+        name: group.course.title,
+        date: group.start_date,
+        schedule: group.schedule,
+        sumPerModule: group.price_per_month,
+        sumAllMonth: group.price_per_all,
       })),
     };
   },
-  [actions.getStudentRegistrationSuccess](state, { payload }) {
+  [actions.getStudentsRegistrationSuccess](state, { payload }) {
     return {
       ...state,
-      data: state.data.map((object) => (object.num === payload.id
+      data: state.data.map((student) => (student.num === payload.id
         ? {
-          ...object,
-          description: payload.results.map((result) => ({
-            key: result.student.id,
-            idRegistration: result.id,
-            number: result.student.id,
-            fullName: `${result.student.family || ' '} ${result.student.name || ' '} ${result.student.second_name || ' '}`,
-            phone: result.student.phone,
-            payments: result.payments,
-            payedMonth: result.payed_month,
-            modules: result.group.course.modules,
+          ...student,
+          description: payload.results.map((studentRenderData) => ({
+            key: studentRenderData.student.id,
+            idRegistration: studentRenderData.id,
+            number: studentRenderData.student.id,
+            fullName: `${studentRenderData.student.family || ' '} ${studentRenderData.student.name || ' '} ${studentRenderData.student.second_name || ' '}`,
+            phone: studentRenderData.student.phone,
+            payments: studentRenderData.payments,
+            payedMonth: studentRenderData.payed_month,
+            modules: studentRenderData.group.course.modules,
           })),
         }
-        : { ...object })),
-    };
-  },
-  [actions.getGroupDataFailure](state) {
-    return {
-      ...state,
+        : student)),
     };
   },
 }, {
   data: [],
 });
 
-const createPay = handleActions({
-  [actions.postCreatePayRequest](state) {
-    return {
-      ...state,
-    };
-  },
-  [actions.postCreatePaySuccess](state) {
-    return {
-      ...state,
-    };
-  },
-  [actions.postCreatePayFailure](state) {
-    return {
-      ...state,
-    };
-  },
-}, {});
-
-
 export default combineReducers({
   loginData,
-  loadingUI,
+  groups,
+  loadingTokenUI,
   loadingStudentsUI,
   loadingGroupsUI,
-  groups,
-  createPay,
 });

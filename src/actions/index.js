@@ -23,37 +23,38 @@ export const login = (username, password) => async (dispatch) => {
     message.success('Loaded!', 1);
     history.push('/main');
   } catch (e) {
-    dispatch(loginFailure());
+    dispatch(loginFailure(e));
     message.error('Failure!', 1);
   }
 };
 
 // Async Request GET Data Groups
-export const getGroupDataRequest = createAction('GROUP_DATA_REQUEST');
-export const getGroupDataSuccess = createAction('GROUP_DATA_SUCCESS');
-export const getGroupDataFailure = createAction('GROUP_DATA_FAILURE');
+export const getGroupsDataRequest = createAction('GROUP_DATA_REQUEST');
+export const getGroupsDataSuccess = createAction('GROUP_DATA_SUCCESS');
+export const getGroupsDataFailure = createAction('GROUP_DATA_FAILURE');
 
-export const getGroupData = () => async (dispatch) => {
-  dispatch(getGroupDataRequest());
+export const getGroupsData = () => async (dispatch) => {
+  dispatch(getGroupsDataRequest());
   try {
     const response = await axios.get(routes.groups(), {
       headers: {
         Authorization: localStorage.getItem('token'),
       },
     });
-    dispatch(getGroupDataSuccess(response.data.results));
+    dispatch(getGroupsDataSuccess(response.data.results));
   } catch (e) {
-    dispatch(getGroupDataFailure(e));
+    history.push('/');
+    dispatch(getGroupsDataFailure(e));
   }
 };
 
 // Async Request GET Data Registered User
-export const getStudentRegistrationRequest = createAction('STUDENTS_DATA_REQUEST');
-export const getStudentRegistrationSuccess = createAction('STUDENTS_DATA_SUCCESS');
-export const getStudentRegistrationFailure = createAction('STUDENTS_DATA_FAILURE');
+export const getStudentsRegistrationRequest = createAction('STUDENTS_DATA_REQUEST');
+export const getStudentsRegistrationSuccess = createAction('STUDENTS_DATA_SUCCESS');
+export const getStudentsRegistrationFailure = createAction('STUDENTS_DATA_FAILURE');
 
 export const getStudentRegistrationData = (id) => async (dispatch) => {
-  dispatch(getStudentRegistrationRequest());
+  dispatch(getStudentsRegistrationRequest());
   try {
     const response = await axios.get(routes.registrations(), {
       params: {
@@ -63,9 +64,10 @@ export const getStudentRegistrationData = (id) => async (dispatch) => {
         Authorization: localStorage.getItem('token'),
       },
     });
-    dispatch(getStudentRegistrationSuccess({ results: response.data.results, id }));
+    dispatch(getStudentsRegistrationSuccess({ results: response.data.results, id }));
   } catch (e) {
-    dispatch(getStudentRegistrationFailure(e));
+    history.push('/');
+    dispatch(getStudentsRegistrationFailure(e));
   }
 };
 
@@ -81,7 +83,6 @@ export const postCreatePay = (id, month) => async (dispatch) => {
     }, {
       headers: { Authorization: localStorage.getItem('token') },
     });
-    console.log('month ', month, 'id', id);
     dispatch(postCreatePaySuccess());
   } catch (e) {
     dispatch(postCreatePayFailure());

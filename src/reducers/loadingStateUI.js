@@ -2,44 +2,46 @@ import { handleActions } from 'redux-actions';
 
 import * as actions from '../actions';
 
-export const loadingUI = handleActions({
+export const loadingTokenUI = handleActions({
   [actions.loginRequest](state) {
     return {
       ...state,
-      state: 'request',
+      loadingState: 'request',
     };
   },
   [actions.loginSuccess](state) {
     return {
       ...state,
-      state: 'success',
+      loadingState: 'success',
     };
   },
   [actions.loginFailure](state) {
     return {
       ...state,
-      state: 'failure',
+      loadingState: 'failure',
     };
   },
-}, {});
+}, {
+  loadingState: '',
+});
 
 export const loadingStudentsUI = handleActions({
-  [actions.getStudentRegistrationRequest](state) {
+  [actions.getStudentsRegistrationRequest](state) {
     return {
       ...state,
-      loadingDataState: 'request',
+      loadingState: 'request',
     };
   },
-  [actions.getStudentRegistrationSuccess](state) {
+  [actions.getStudentsRegistrationSuccess](state) {
     return {
       ...state,
-      loadingDataState: 'success',
+      loadingState: 'success',
     };
   },
-  [actions.getStudentRegistrationFailure](state) {
+  [actions.getStudentsRegistrationFailure](state) {
     return {
       ...state,
-      loadingDataState: 'failure',
+      loadingState: 'failure',
     };
   },
 }, {
@@ -47,19 +49,19 @@ export const loadingStudentsUI = handleActions({
 });
 
 export const loadingGroupsUI = handleActions({
-  [actions.getGroupDataRequest](state) {
+  [actions.getGroupsDataRequest](state) {
     return {
       ...state,
       loadingState: 'request',
     };
   },
-  [actions.getGroupDataSuccess](state) {
+  [actions.getGroupsDataSuccess](state) {
     return {
       ...state,
       loadingState: 'success',
     };
   },
-  [actions.getGroupDataFailure](state) {
+  [actions.getGroupsDataFailure](state) {
     return {
       ...state,
       loadingState: 'failure',
