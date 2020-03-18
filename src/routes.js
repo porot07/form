@@ -1,4 +1,4 @@
-const host = 'http://192.168.1.241:8999';
+const host = 'http://94.158.52.41:8999';
 
 export default {
   auth: () => [host, 'auth/'].join('/'),

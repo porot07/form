@@ -19,6 +19,7 @@ module.exports = {
       { test: /\.s[ac]ss$/i, use: ['style-loader', 'css-loader', 'sass-loader'] },
       { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
       { test: /\.jsx?$/, use: 'babel-loader' },
+      { test: /\.(png|jpe?g|gif)$/i, use: 'file-loader' },
     ],
   },
   resolve: {

@@ -29,9 +29,9 @@ export const login = (username, password) => async (dispatch) => {
 };
 
 // Async Request GET Data Groups
-export const getGroupsDataRequest = createAction('GROUP_DATA_REQUEST');
-export const getGroupsDataSuccess = createAction('GROUP_DATA_SUCCESS');
-export const getGroupsDataFailure = createAction('GROUP_DATA_FAILURE');
+export const getGroupsDataRequest = createAction('GET_GROUP_DATA_REQUEST');
+export const getGroupsDataSuccess = createAction('GET_GROUP_DATA_SUCCESS');
+export const getGroupsDataFailure = createAction('GET_GROUP_DATA_FAILURE');
 
 export const getGroupsData = () => async (dispatch) => {
   dispatch(getGroupsDataRequest());
@@ -43,15 +43,18 @@ export const getGroupsData = () => async (dispatch) => {
     });
     dispatch(getGroupsDataSuccess(response.data.results));
   } catch (e) {
-    history.push('/');
+    if (e.response.status === 403) {
+      localStorage.removeItem('token');
+      dispatch(loginFailure());
+    }
     dispatch(getGroupsDataFailure(e));
   }
 };
 
 // Async Request GET Data Registered User
-export const getStudentsRegistrationRequest = createAction('STUDENTS_DATA_REQUEST');
-export const getStudentsRegistrationSuccess = createAction('STUDENTS_DATA_SUCCESS');
-export const getStudentsRegistrationFailure = createAction('STUDENTS_DATA_FAILURE');
+export const getStudentsRegistrationRequest = createAction('GET_STUDENTS_REGISTRATION_REQUEST');
+export const getStudentsRegistrationSuccess = createAction('GET_STUDENTS_REGISTRATION_SUCCESS');
+export const getStudentsRegistrationFailure = createAction('GET_STUDENTS_REGISTRATION_FAILURE');
 
 export const getStudentRegistrationData = (id) => async (dispatch) => {
   dispatch(getStudentsRegistrationRequest());
@@ -66,14 +69,17 @@ export const getStudentRegistrationData = (id) => async (dispatch) => {
     });
     dispatch(getStudentsRegistrationSuccess({ results: response.data.results, id }));
   } catch (e) {
-    history.push('/');
+    if (e.response.status === 403) {
+      localStorage.removeItem('token');
+      dispatch(loginFailure());
+    }
     dispatch(getStudentsRegistrationFailure(e));
   }
 };
 
-export const postCreatePayRequest = createAction('CREATE_PAY_REQUEST');
-export const postCreatePaySuccess = createAction('CREATE_PAY_SUCCESS');
-export const postCreatePayFailure = createAction('CREATE_PAY_FAILURE');
+export const postCreatePayRequest = createAction('POST_CREATE_PAY_REQUEST');
+export const postCreatePaySuccess = createAction('POST_CREATE_PAY_SUCCESS');
+export const postCreatePayFailure = createAction('POST_CREATE_PAY_FAILURE');
 
 export const postCreatePay = (id, month) => async (dispatch) => {
   dispatch(postCreatePayRequest());
@@ -85,6 +91,7 @@ export const postCreatePay = (id, month) => async (dispatch) => {
     });
     dispatch(postCreatePaySuccess());
   } catch (e) {
+    localStorage.removeItem('token');
     dispatch(postCreatePayFailure());
   }
 };

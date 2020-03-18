@@ -4,25 +4,6 @@ import { combineReducers } from 'redux';
 import * as actions from '../actions';
 import { loadingTokenUI, loadingStudentsUI, loadingGroupsUI } from './loadingStateUI';
 
-const loginData = handleActions({
-  [actions.loginRequest](state) {
-    return {
-      ...state,
-    };
-  },
-  [actions.loginSuccess](state) {
-    return {
-      ...state,
-    };
-  },
-  [actions.loginFailure](state, { payload }) {
-    console.log('login failure: ', payload);
-    return {
-      ...state,
-    };
-  },
-}, {});
-
 const groups = handleActions({
   [actions.getGroupsDataSuccess](state, { payload }) {
     return {
@@ -63,7 +44,6 @@ const groups = handleActions({
 });
 
 export default combineReducers({
-  loginData,
   groups,
   loadingTokenUI,
   loadingStudentsUI,

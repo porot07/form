@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  Table,
-  Form,
-  InputNumber,
-  Button,
+  Table, Form,
+  InputNumber, Button,
 } from 'antd';
 
 import * as actions from '../actions';
@@ -69,6 +67,8 @@ const Groups = () => {
           const [form] = Form.useForm();
           const onFinish = ({ numbers }) => {
             dispatch(actions.postCreatePay(recordRender.idRegistration, numbers));
+            dispatch(actions.getStudentRegistrationData(record.num));
+            form.resetFields();
           };
           return (
           <Form form={form} name="form-create-pay" layout="inline" onFinish={onFinish}>
@@ -98,14 +98,15 @@ const Groups = () => {
       dispatch(actions.getStudentRegistrationData(record.num));
     }
   };
+
   return (
-      <Table
-        columns={columns}
-        expandable={{ expandedRowRender, onExpand }}
-        dataSource={groups}
-        pagination={false}
-        loading={loadingGroupsUI === 'request'}
-      />
+    <Table
+      columns={columns}
+      expandable={{ expandedRowRender, onExpand }}
+      dataSource={groups}
+      pagination={false}
+      loading={loadingGroupsUI === 'request'}
+    />
   );
 };
 
